@@ -1,0 +1,367 @@
+{
+    "classification": {
+      "sweeping_enabled": true,
+      "page_sampled_data_to_disk": true,
+      "run_sweeping_in_isolation": true,
+      "enabled_sweepers": [
+        {
+          "name": "TextWordEmbeddings",
+          "enabled": true,
+          "type": "binary",
+          "sampler": {
+            "id": "count",
+            "args": [],
+            "kwargs": {}
+          },
+          "estimator": "logistic_regression",
+          "scorer": "accuracy",
+          "baseline": {
+            "featurizers": [
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "bow_transformer",
+                "type": "text"
+              }
+            ]
+          },
+          "experiment": {
+            "featurizers": [
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "word_embeddings",
+                "type": "text",
+                "args": [],
+                "kwargs": {
+                  "embeddings_name": "wiki_news_300d_1M_subword"
+                }
+              }
+            ],
+            "include_baseline": true
+          },
+          "column_purposes": [
+            {
+              "types": ["text"]
+            }
+          ],
+          "epsilon": 0.01
+        },
+        {
+          "name": "KMeansClusterDistance",
+          "enabled": true,
+          "type": "binary",
+          "sampler": {
+            "id": "count",
+            "args": [],
+            "kwargs": {}
+          },
+          "estimator": "logistic_regression",
+          "scorer": "accuracy",
+          "baseline": {
+            "featurizers": [
+              {
+                "id": "imputer",
+                "type": "generic"
+              }
+            ]
+          },
+          "experiment": {
+            "featurizers": [
+              {
+                "id": "imputer",
+                "type": "generic"
+              },
+              {
+                "id": "maxabsscaler",
+                "type": "generic"
+              },
+              {
+                "id": "minibatchkmeans_featurizer",
+                "type": "generic"
+              }
+            ],
+            "include_baseline": true
+          },
+          "column_purposes": [
+            {
+              "group": "featurize",
+              "types" : ["numeric"]
+            }
+          ],
+          "epsilon": 0.005
+        },
+        {
+          "name": "CategoricalTargetEncoder",
+          "enabled": false,
+          "type": "binary",
+          "sampler": {
+            "id": "count",
+            "args": [],
+            "kwargs": {}
+          },
+          "estimator": "logistic_regression",
+          "scorer": "accuracy",
+          "baseline": {
+            "featurizers": [
+              {
+                "id": "cat_imputer",
+                "type": "categorical"
+              },
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "onehotencoder",
+                "type": "categorical"
+              }
+            ]
+          },
+          "experiment": {
+            "featurizers": [
+              {
+                "id": "cat_imputer",
+                "type": "categorical"
+              },
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "cat_targetencoder",
+                "type": "categorical",
+                "args": [],
+                "kwargs": {
+                  "task": "classification"
+                }
+              }
+            ],
+            "include_baseline": true
+          },
+          "column_purposes": [
+            {
+              "group": "score",
+              "types": ["categorical"]
+            }
+          ],
+          "epsilon": 0.01
+        },
+        {
+          "name": "WeightOfEvidenceTargetEncoder",
+          "enabled": false,
+          "type": "binary",
+          "sampler": {
+            "id": "count",
+            "args": [],
+            "kwargs": {}
+          },
+          "estimator": "logistic_regression",
+          "scorer": "accuracy",
+          "baseline": {
+            "featurizers": [
+              {
+                "id": "cat_imputer",
+                "type": "categorical"
+              },
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "onehotencoder",
+                "type": "categorical"
+              }
+            ]
+          },
+          "experiment": {
+            "featurizers": [
+              {
+                "id": "cat_imputer",
+                "type": "categorical"
+              },
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "woe_targetencoder",
+                "type": "categorical",
+                "args": [],
+                "kwargs": {
+                  "task": "classification"
+                }
+              }
+            ],
+            "include_baseline": true
+          },
+          "column_purposes": [
+          {
+            "group": "score",
+            "types": ["categorical"]
+          }
+        ],
+        "epsilon": 0.01
+      },
+      {
+        "name": "AveragePerceptronTextTargetEncoder",
+        "enabled": false,
+        "type": "binary",
+        "sampler": {
+          "id": "count",
+          "args": [],
+          "kwargs": {}
+        },
+        "estimator": "logistic_regression",
+        "scorer": "accuracy",
+        "baseline": {
+          "featurizers": [
+            {
+              "id": "string_cast",
+              "type": "text"
+            },
+            {
+              "id": "bow_transformer",
+              "type": "text"
+            }
+          ]
+        },
+        "experiment": {
+          "featurizers": [
+            {
+              "id": "string_cast",
+              "type": "text"
+            },
+            {
+              "id": "averaged_perceptron_text_target_encoder",
+              "type": "text",
+              "args": [],
+              "kwargs": {}
+            }
+          ],
+          "include_baseline": true
+        },
+        "column_purposes": [
+          {
+            "types": ["text"]
+          }
+        ],
+        "epsilon": 0.01
+      }
+    ]
+    },
+    "regression": {
+      "sweeping_enabled": false,
+      "page_sampled_data_to_disk": true,
+      "run_sweeping_in_isolation": true,
+      "enabled_sweepers": [
+        {
+          "name": "TextWordEmbeddings",
+          "enabled": true,
+          "type": "binary",
+          "sampler": {
+            "id": "count",
+            "args": [],
+            "kwargs": {}
+          },
+          "estimator": "linear_regression",
+          "scorer": "r2_score",
+          "baseline": {
+            "featurizers": [
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "bow_transformer",
+                "type": "text"
+              }
+            ]
+          },
+          "experiment": {
+            "featurizers": [
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "word_embeddings",
+                "type": "text",
+                "args": [],
+                "kwargs": {
+                  "embeddings_name": "wiki_news_300d_1M_subword"
+                }
+              }
+            ],
+            "include_baseline": true
+          },
+          "column_purposes": [
+            {
+              "types": ["text"]
+            }
+          ],
+          "epsilon": 0.01
+        },
+        {
+          "name": "CategoricalTargetEncoder",
+          "enabled": true,
+          "type": "binary",
+          "sampler": {
+            "id": "count",
+            "args": [],
+            "kwargs": {}
+          },
+          "estimator": "linear_regression",
+          "scorer": "r2_score",
+          "baseline": {
+            "featurizers": [
+              {
+                "id": "cat_imputer",
+                "type": "categorical"
+              },
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "onehotencoder",
+                "type": "categorical"
+              }
+            ]
+          },
+          "experiment": {
+            "featurizers": [
+              {
+                "id": "cat_imputer",
+                "type": "categorical"
+              },
+              {
+                "id": "string_cast",
+                "type": "text"
+              },
+              {
+                "id": "cat_targetencoder",
+                "type": "categorical",
+                "args": [],
+                "kwargs": {
+                  "task": "regression"
+                }
+              }
+            ],
+            "include_baseline": true
+          },
+          "column_purposes": [
+            {
+              "group": "score",
+              "types": ["categorical"]
+            }
+          ],
+          "epsilon": 0.01
+        }
+      ]
+    }
+  }
